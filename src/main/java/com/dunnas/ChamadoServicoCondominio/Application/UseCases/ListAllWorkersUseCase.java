@@ -9,11 +9,11 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
-public class ListAllUsersUseCase {
+public class ListAllWorkersUseCase {
     @Autowired
     private UserService userService;
 
     public List<UserEntity> execute() {
-        return userService.getAllUsers(Role.USER);
+        return userService.getAllUsers(Role.WORKER);
     }
 }

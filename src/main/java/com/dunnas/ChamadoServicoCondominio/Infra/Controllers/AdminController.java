@@ -1,7 +1,6 @@
 package com.dunnas.ChamadoServicoCondominio.Infra.Controllers;
 
-import com.dunnas.ChamadoServicoCondominio.Application.UseCases.CreateUserUseCase;
-import com.dunnas.ChamadoServicoCondominio.Application.UseCases.ListAllUsersUseCase;
+import com.dunnas.ChamadoServicoCondominio.Application.UseCases.*;
 import com.dunnas.ChamadoServicoCondominio.Domain.Core.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -16,9 +15,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/admin")
 public class AdminController {
     @Autowired
-    private CreateUserUseCase createUseruseCase;
+    private CreateUserUseCase createUserUseCase;
+    @Autowired
+    private CreateWorkerUseCase createWorkerUseCase;
+    @Autowired
+    private CreateAdminUseCase createAdminUseCase;
+
     @Autowired
     private ListAllUsersUseCase listAllUsersUseCase;
+    @Autowired
+    private ListAllAdminsUseCase listAllAdminsUseCase;
+    @Autowired
+    private ListAllWorkersUseCase listAllWorkersUseCase;
+
 
     private void addLoggedUserToModel(Model model) {
         UserEntity user = (UserEntity) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -40,25 +49,38 @@ public class AdminController {
 
     @PostMapping("/moradores")
     public String createUser(@ModelAttribute UserEntity user) {
-        createUseruseCase.execute(user);
+        createUserUseCase.execute(user);
         return "redirect:/admin/moradores";
     }
 
     @GetMapping("/colaboradores")
     public String workersList(Model model) {
         addLoggedUserToModel(model);
+        model.addAttribute("workerList", listAllWorkersUseCase.execute());
         return "admin/WorkersLists";
+    }
+
+    @PostMapping("/colaboradores")
+    public String createWorker(@ModelAttribute UserEntity user) {
+        createWorkerUseCase.execute(user);
+        return "redirect:/admin/colaboradores";
+    }
+
+    @GetMapping("/administradores")
+    public String listAdmins(Model model) {
+        addLoggedUserToModel(model);
+        model.addAttribute("adminList", listAllAdminsUseCase.execute());
+        return "admin/AdminsList";
+    }
+    @PostMapping("/administradores")
+    public String createAdmin(@ModelAttribute UserEntity user) {
+        createAdminUseCase.execute(user);
+        return "redirect:/admin/administradores";
     }
 
     @GetMapping("/blocos")
     public String listBlocks(Model model) {
         addLoggedUserToModel(model);
         return "admin/ListBlocks";
-    }
-
-    @GetMapping("/administradores")
-    public String listAdmins(Model model) {
-        addLoggedUserToModel(model);
-        return "admin/AdminsList";
     }
 }

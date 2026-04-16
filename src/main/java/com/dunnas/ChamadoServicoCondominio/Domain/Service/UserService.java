@@ -1,5 +1,6 @@
 package com.dunnas.ChamadoServicoCondominio.Domain.Service;
 
+import com.dunnas.ChamadoServicoCondominio.Domain.Core.Role;
 import com.dunnas.ChamadoServicoCondominio.Domain.Core.UserEntity;
 import com.dunnas.ChamadoServicoCondominio.Domain.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,8 +33,17 @@ public class UserService implements UserDetailsService {
         return Optional.ofNullable(userRepository.findByLogin(login));
     }
 
-    public List<UserEntity> getAllUsers() {
-        return userRepository.findAllWithRoleUser();
+    public List<UserEntity> getAllUsers(Role role) {
+        switch (role) {
+            case USER:
+                return userRepository.findAllWithRoleUser();
+            case ADMIN:
+                return userRepository.findAllWithRoleAdmin();
+            case WORKER:
+                return userRepository.findAllWithRoleWorker();
+            default:
+                throw new IllegalArgumentException("Invalid role: " + role);
+        }
     }
 
     // UPDATE

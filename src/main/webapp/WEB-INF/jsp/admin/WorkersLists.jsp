@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -78,6 +79,97 @@
         }
 
         .back-btn:hover { opacity: 0.9; }
+
+        .create-form {
+            margin-bottom: 28px;
+            padding: 20px;
+            border: 1px solid #e9e9e9;
+            border-radius: 10px;
+            background: #fafafa;
+        }
+
+        .create-form h2 { color: #333; font-size: 20px; margin-bottom: 16px; }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .create-form input {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #d8d8d8;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        .create-form input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.15);
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .submit-btn:hover { opacity: 0.95; }
+
+        .users-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 24px;
+        }
+
+        .users-table thead {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .users-table th {
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .users-table tbody tr {
+            border-bottom: 1px solid #e9e9e9;
+            transition: background-color 0.2s;
+        }
+
+        .users-table tbody tr:hover {
+            background-color: #f5f5f5;
+        }
+
+        .users-table td {
+            padding: 12px;
+            color: #333;
+        }
+
+        .users-table .role-badge {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .empty-message {
+            text-align: center;
+            color: #999;
+            padding: 30px;
+            font-style: italic;
+        }
     </style>
 </head>
 <body>
@@ -86,8 +178,49 @@
 
         <div class="container">
             <a href="${pageContext.request.contextPath}/admin/home" class="back-btn">&larr; Voltar</a>
+
+            <form class="create-form" method="POST" action="${pageContext.request.contextPath}/admin/colaboradores">
+                <h2>Novo Colaborador</h2>
+                <div class="form-row">
+                    <input type="text" name="name" placeholder="Nome completo" required>
+                    <input type="text" name="login" placeholder="Login" required>
+                    <input type="password" name="password" placeholder="Senha" required>
+                </div>
+                <button type="submit" class="submit-btn">Cadastrar colaborador</button>
+            </form>
+
             <h1>Gerenciar Colaboradores</h1>
-            <!-- Conteudo sera adicionado aqui -->
+
+            <c:choose>
+                <c:when test="${empty workerList}">
+                    <div class="empty-message">Nenhum colaborador cadastrado no sistema.</div>
+                </c:when>
+                <c:otherwise>
+                    <table class="users-table">
+                        <thead>
+                            <tr>
+                                <th>Nome</th>
+                                <th>Login</th>
+                                <th>Role</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <c:forEach var="worker" items="${workerList}">
+                                <tr>
+                                    <td>${worker.name}</td>
+                                    <td>${worker.login}</td>
+                                    <td><span class="role-badge">${worker.role}</span></td>
+                                    <td>
+                                        <a href="#" style="color: #667eea; text-decoration: none; margin-right: 10px;">Editar</a>
+                                        <a href="#" style="color: #ff6b6b; text-decoration: none;">Deletar</a>
+                                    </td>
+                                </tr>
+                            </c:forEach>
+                        </tbody>
+                    </table>
+                </c:otherwise>
+            </c:choose>
         </div>
     </div>
 </body>

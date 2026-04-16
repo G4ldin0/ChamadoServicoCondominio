@@ -14,4 +14,10 @@ public interface UserRepository extends JpaRepository<UserEntity, UUID> {
 
     @Query("SELECT u FROM UserEntity u WHERE u.role = 'USER'")
     List<UserEntity> findAllWithRoleUser();
+
+    @Query("SELECT u FROM UserEntity u WHERE u.role = 'ADMIN'")
+    List<UserEntity> findAllWithRoleAdmin();
+
+    @Query("SELECT u FROM UserEntity u WHERE u.role = 'WORKER'")
+    List<UserEntity> findAllWithRoleWorker();
 }
