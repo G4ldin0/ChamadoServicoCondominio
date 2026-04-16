@@ -7,6 +7,8 @@ CREATE TABLE IF NOT EXISTS Users (
 );
 
 INSERT INTO Users (user_id, user_name, user_login, user_password, user_role)
-VALUES (gen_random_uuid(), 'admin', 'admin', 'admin', 'ADMIN')
+VALUES (gen_random_uuid(), 'admin', 'admin', '{noop}admin', 'ADMIN')
 ON CONFLICT (user_login) DO NOTHING;
+
+
 

@@ -1,12 +1,16 @@
 package com.dunnas.ChamadoServicoCondominio.Domain.Core;
 
 import jakarta.persistence.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.Collection;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
 @Table(name = "Users")
-public class UserEntity {
+public class UserEntity implements UserDetails {
 
     @Column(name = "user_id")
     @Id
@@ -19,7 +23,12 @@ public class UserEntity {
     @Column(name = "user_password")
     private String password;
     @Column(name = "user_role")
+    @Enumerated(EnumType.STRING)
     private Role role;
+
+    public UserEntity(){
+
+    }
 
     public UserEntity(String name, String login, String password, Role role) {
         this.name = name;
@@ -48,8 +57,22 @@ public class UserEntity {
         this.login = login;
     }
 
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        if (role == Role.ADMIN)
+            return List.of(() -> "ROLE_ADMIN", () -> "ROLE_USER", () -> "ROLE_WORKER");
+        if (role == Role.WORKER)
+            return List.of(() -> "ROLE_WORKER");
+        return List.of(() -> "ROLE_USER");
+    }
+
     public String getPassword() {
         return password;
+    }
+
+    @Override
+    public String getUsername() {
+        return login;
     }
 
     public void setPassword(String password) {
