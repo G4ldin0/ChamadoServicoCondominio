@@ -1,15 +1,22 @@
 package com.dunnas.ChamadoServicoCondominio.Infra.Controllers;
 
+import com.dunnas.ChamadoServicoCondominio.Application.UseCases.AuthenticateUserUseCase;
+import com.dunnas.ChamadoServicoCondominio.Application.UseCases.CreateUserUseCase;
 import com.dunnas.ChamadoServicoCondominio.Domain.Core.UserEntity;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
+    @Autowired
+    private CreateUserUseCase createUseruseCase;
 
     @GetMapping("/home")
     public String home(Model model) {
@@ -23,6 +30,13 @@ public class AdminController {
     @GetMapping("/moradores")
     public String usersList() {
         return "admin/UsersList";
+    }
+
+    @PostMapping("/moradores")
+    public String createUser(@ModelAttribute UserEntity user) {
+        createUseruseCase.execute(user);
+        return "redirect:/admin/moradores";
+
     }
 
     @GetMapping("/colaboradores")

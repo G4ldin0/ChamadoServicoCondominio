@@ -182,9 +182,11 @@
                 <a href="${pageContext.request.contextPath}/admin/blocos" class="nav-button">
                     🏢 Blocos
                 </a>
+                <a href="${pageContext.request.contextPath}/admin/administradores" class="nav-button">
+                    👑 Administradores
+                </a>
             </div>
         </div>
     </div>
 </body>
 </html>
-
