@@ -6,10 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/admin")
@@ -27,6 +24,13 @@ public class AdminController {
     private ListAllAdminsUseCase listAllAdminsUseCase;
     @Autowired
     private ListAllWorkersUseCase listAllWorkersUseCase;
+
+    @Autowired
+    private DeleteUserUseCase deleteUserUseCase;
+    @Autowired
+    private DeleteWorkerUseCase deleteWorkerUseCase;
+    @Autowired
+    private DeleteAdminUseCase deleteAdminUseCase;
 
 
     private void addLoggedUserToModel(Model model) {
@@ -53,6 +57,20 @@ public class AdminController {
         return "redirect:/admin/moradores";
     }
 
+    @PostMapping("/moradores/apagar/{id}")
+    public String deleteUser(@PathVariable String id) {
+        try{
+            deleteUserUseCase.execute(id);
+            return "redirect:/admin/moradores";
+        } catch (RuntimeException e) {
+            // Log the error message
+            System.err.println("Error deleting user: " + e.getMessage());
+            // Optionally, you can add an error message to the model to display in the UI
+            // model.addAttribute("errorMessage", "Error deleting user: " + e.getMessage());
+            return "redirect:/admin/moradores";
+        }
+    }
+
     @GetMapping("/colaboradores")
     public String workersList(Model model) {
         addLoggedUserToModel(model);
@@ -66,6 +84,20 @@ public class AdminController {
         return "redirect:/admin/colaboradores";
     }
 
+    @PostMapping("/colaboradores/apagar/{id}")
+    public String deleteWorker(@PathVariable String id) {
+        try{
+            deleteWorkerUseCase.execute(id);
+            return "redirect:/admin/colaboradores";
+        } catch (RuntimeException e) {
+            // Log the error message
+            System.err.println("Error deleting user: " + e.getMessage());
+            // Optionally, you can add an error message to the model to display in the UI
+            // model.addAttribute("errorMessage", "Error deleting user: " + e.getMessage());
+            return "redirect:/admin/colaboradores";
+        }
+    }
+
     @GetMapping("/administradores")
     public String listAdmins(Model model) {
         addLoggedUserToModel(model);
@@ -76,6 +108,20 @@ public class AdminController {
     public String createAdmin(@ModelAttribute UserEntity user) {
         createAdminUseCase.execute(user);
         return "redirect:/admin/administradores";
+    }
+
+    @PostMapping("/administradores/apagar/{id}")
+    public String deleteAdmin(@PathVariable String id) {
+        try{
+            deleteAdminUseCase.execute(id);
+            return "redirect:/admin/administradores";
+        } catch (RuntimeException e) {
+            // Log the error message
+            System.err.println("Error deleting user: " + e.getMessage());
+            // Optionally, you can add an error message to the model to display in the UI
+            // model.addAttribute("errorMessage", "Error deleting user: " + e.getMessage());
+            return "redirect:/admin/administradores";
+        }
     }
 
     @GetMapping("/blocos")

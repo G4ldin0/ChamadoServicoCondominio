@@ -53,7 +53,11 @@ public class UserService implements UserDetailsService {
 
     // DELETE
     public void deleteUser(UUID id) {
-        userRepository.deleteById(id);
+        try{
+            userRepository.deleteById(id);
+        } catch (Exception e) {
+            throw new RuntimeException("User with id " + id + " not found.");
+        }
     }
 
     public void deleteAllUsers() {

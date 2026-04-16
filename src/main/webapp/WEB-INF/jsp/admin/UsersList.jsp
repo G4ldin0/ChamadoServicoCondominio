@@ -172,6 +172,17 @@
             padding: 30px;
             font-style: italic;
         }
+
+        .action-link {
+            text-decoration: none;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+
+        .action-link.edit { color: #667eea; }
+        .action-link.delete { color: #ff6b6b; }
+
+        .action-link:hover { text-decoration: underline; }
     </style>
 </head>
 <body>
@@ -214,8 +225,10 @@
                                     <td>${user.login}</td>
                                     <td><span class="role-badge">${user.role}</span></td>
                                     <td>
-                                        <a href="#" style="color: #667eea; text-decoration: none; margin-right: 10px;">Editar</a>
-                                        <a href="#" style="color: #ff6b6b; text-decoration: none;">Deletar</a>
+                                        <a href="#" class="action-link edit">Editar</a>
+                                        <form style="display: inline;" method="POST" action="${pageContext.request.contextPath}/admin/moradores/apagar/${user.id}">
+                                            <button type="submit" class="action-link delete" style="background: none; border: none; padding: 0; font-size: inherit;">Deletar</button>
+                                        </form>
                                     </td>
                                 </tr>
                             </c:forEach>
