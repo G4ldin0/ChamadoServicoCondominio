@@ -36,6 +36,9 @@ public class SecurityFilter extends OncePerRequestFilter {
             String user_id = tokenService.validateToken(token);
             UserEntity userEntity = userRepository.findById(UUID.fromString(user_id)).orElse(null);
             if (userEntity != null) {
+                System.out.println(userEntity.getName());
+                System.out.println(userEntity.getLogin());
+                System.out.println(userEntity.getRole());
                 var auth = new UsernamePasswordAuthenticationToken(userEntity,  null, userEntity.getAuthorities());
                 SecurityContextHolder.getContext().setAuthentication(auth);
             }
@@ -48,9 +51,9 @@ public class SecurityFilter extends OncePerRequestFilter {
 
     private String extractToken(HttpServletRequest request) {
         var cookies = request.getCookies();
+        if (cookies == null) return null;
         String tokenFromCookie = Arrays.stream(cookies).filter(cookie -> cookie.getName().equals("token")).findFirst().map(cookie -> cookie.getValue()).orElse(null);
-        if (tokenFromCookie != null)
-            return tokenFromCookie;
-        return null;
+        if (tokenFromCookie == null) return null;
+        return tokenFromCookie;
     }
 }

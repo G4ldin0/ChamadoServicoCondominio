@@ -64,8 +64,8 @@ public class AuthController {
             return "redirect:/admin/home";
         }
 
-        boolean isMorador = auth.stream().anyMatch(a -> a.getAuthority().equals("ROLE_MORADOR"));
-        boolean isColaborador = auth.stream().anyMatch(a -> a.getAuthority().equals("ROLE_COLABORADOR"));
+        boolean isMorador = auth.stream().anyMatch(a -> a.getAuthority().equals("ROLE_USER"));
+        boolean isColaborador = auth.stream().anyMatch(a -> a.getAuthority().equals("ROLE_WORKER"));
 
         if (isMorador) {
             return "redirect:/morador/home";
