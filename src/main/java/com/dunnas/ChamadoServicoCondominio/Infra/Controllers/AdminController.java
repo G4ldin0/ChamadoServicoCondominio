@@ -1,6 +1,5 @@
 package com.dunnas.ChamadoServicoCondominio.Infra.Controllers;
 
-import com.dunnas.ChamadoServicoCondominio.Application.UseCases.AuthenticateUserUseCase;
 import com.dunnas.ChamadoServicoCondominio.Application.UseCases.CreateUserUseCase;
 import com.dunnas.ChamadoServicoCondominio.Domain.Core.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,17 +17,20 @@ public class AdminController {
     @Autowired
     private CreateUserUseCase createUseruseCase;
 
+    private void addLoggedUserToModel(Model model) {
+        UserEntity user = (UserEntity) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        model.addAttribute("user", user);
+    }
+
     @GetMapping("/home")
     public String home(Model model) {
-        UserEntity user = (UserEntity) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        model.addAttribute("user.name", user.getName());
-        model.addAttribute("user.login", user.getLogin());
-        model.addAttribute("user.role", user.getRole());
+        addLoggedUserToModel(model);
         return "admin/home";
     }
 
     @GetMapping("/moradores")
-    public String usersList() {
+    public String usersList(Model model) {
+        addLoggedUserToModel(model);
         return "admin/UsersList";
     }
 
@@ -36,17 +38,23 @@ public class AdminController {
     public String createUser(@ModelAttribute UserEntity user) {
         createUseruseCase.execute(user);
         return "redirect:/admin/moradores";
-
     }
 
     @GetMapping("/colaboradores")
-    public String workersList() {
+    public String workersList(Model model) {
+        addLoggedUserToModel(model);
         return "admin/WorkersLists";
     }
 
     @GetMapping("/blocos")
-    public String listBlocks() {
+    public String listBlocks(Model model) {
+        addLoggedUserToModel(model);
         return "admin/ListBlocks";
     }
-}
 
+    @GetMapping("/administradores")
+    public String listAdmins(Model model) {
+        addLoggedUserToModel(model);
+        return "admin/ListAdmins";
+    }
+}

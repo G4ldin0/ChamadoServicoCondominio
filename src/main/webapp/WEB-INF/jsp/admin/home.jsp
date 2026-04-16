@@ -6,11 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home - Administrador</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -19,12 +15,8 @@
             padding: 20px;
         }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
+        .container { max-width: 1200px; margin: 0 auto; }
 
-        /* Header com informações do usuário */
         .header {
             background: white;
             padding: 20px 30px;
@@ -36,22 +28,11 @@
             align-items: center;
         }
 
-        .user-info {
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-        }
+        .user-info { display: flex; flex-direction: column; gap: 5px; }
 
-        .user-info h2 {
-            color: #333;
-            font-size: 20px;
-            margin-bottom: 5px;
-        }
+        .user-info h2 { color: #333; font-size: 20px; margin-bottom: 5px; }
 
-        .user-info p {
-            color: #666;
-            font-size: 14px;
-        }
+        .user-info p { color: #666; font-size: 14px; }
 
         .user-info .role {
             display: inline-block;
@@ -76,11 +57,8 @@
             transition: background 0.3s;
         }
 
-        .logout-btn:hover {
-            background: #ff5252;
-        }
+        .logout-btn:hover { background: #ff5252; }
 
-        /* Main content com botões */
         .main-content {
             background: white;
             padding: 50px;
@@ -97,16 +75,15 @@
 
         .buttons-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-            justify-items: center;
+            grid-template-columns: repeat(2, minmax(240px, 1fr));
+            gap: 24px;
         }
 
         .nav-button {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             border: none;
-            padding: 40px 50px;
+            padding: 28px 20px;
             border-radius: 10px;
             font-size: 18px;
             font-weight: 600;
@@ -114,7 +91,12 @@
             transition: transform 0.3s, box-shadow 0.3s;
             box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
             text-decoration: none;
-            display: inline-block;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 88px;
+            text-align: center;
+            white-space: nowrap;
         }
 
         .nav-button:hover {
@@ -122,41 +104,19 @@
             box-shadow: 0 15px 30px rgba(102, 126, 234, 0.5);
         }
 
-        .nav-button:active {
-            transform: translateY(-2px);
-        }
+        .nav-button:active { transform: translateY(-2px); }
 
-        /* Responsivo para mobile */
         @media (max-width: 768px) {
-            .header {
-                flex-direction: column;
-                gap: 20px;
-                text-align: center;
-            }
-
-            .buttons-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .nav-button {
-                width: 100%;
-                padding: 30px 40px;
-            }
-
-            .main-content {
-                padding: 30px 20px;
-            }
-
-            .main-content h1 {
-                font-size: 24px;
-                margin-bottom: 30px;
-            }
+            .header { flex-direction: column; gap: 20px; text-align: center; }
+            .buttons-grid { grid-template-columns: 1fr; }
+            .nav-button { width: 100%; white-space: normal; }
+            .main-content { padding: 30px 20px; }
+            .main-content h1 { font-size: 24px; margin-bottom: 30px; }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- Header com informações do usuário -->
         <div class="header">
             <div class="user-info">
                 <h2>${user.name}</h2>
@@ -168,23 +128,13 @@
             </form>
         </div>
 
-        <!-- Main content com botões -->
         <div class="main-content">
             <h1>Bem-vindo ao Painel Administrativo</h1>
-
             <div class="buttons-grid">
-                <a href="${pageContext.request.contextPath}/admin/moradores" class="nav-button">
-                    👥 Moradores
-                </a>
-                <a href="${pageContext.request.contextPath}/admin/colaboradores" class="nav-button">
-                    🔧 Colaboradores
-                </a>
-                <a href="${pageContext.request.contextPath}/admin/blocos" class="nav-button">
-                    🏢 Blocos
-                </a>
-                <a href="${pageContext.request.contextPath}/admin/administradores" class="nav-button">
-                    👑 Administradores
-                </a>
+                <a href="${pageContext.request.contextPath}/admin/moradores" class="nav-button">Moradores</a>
+                <a href="${pageContext.request.contextPath}/admin/colaboradores" class="nav-button">Colaboradores</a>
+                <a href="${pageContext.request.contextPath}/admin/blocos" class="nav-button">Blocos</a>
+                <a href="${pageContext.request.contextPath}/admin/administradores" class="nav-button">Administradores</a>
             </div>
         </div>
     </div>

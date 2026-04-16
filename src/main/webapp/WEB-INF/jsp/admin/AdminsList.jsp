@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blocos</title>
+    <title>Administradores</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -86,10 +86,9 @@
 
         <div class="container">
             <a href="${pageContext.request.contextPath}/admin/home" class="back-btn">&larr; Voltar</a>
-            <h1>Gerenciar Blocos</h1>
+            <h1>Gerenciar Administradores</h1>
             <!-- Conteudo sera adicionado aqui -->
         </div>
     </div>
 </body>
-
 </html>

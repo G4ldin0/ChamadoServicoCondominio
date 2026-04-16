@@ -6,11 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Moradores</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -19,19 +15,57 @@
             padding: 20px;
         }
 
+        .page-container { max-width: 1200px; margin: 0 auto; }
+
+        .header {
+            background: white;
+            padding: 20px 30px;
+            border-radius: 10px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            margin-bottom: 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .user-info { display: flex; flex-direction: column; gap: 5px; }
+
+        .user-info h2 { color: #333; font-size: 20px; margin-bottom: 5px; }
+
+        .user-info p { color: #666; font-size: 14px; }
+
+        .user-info .role {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-top: 5px;
+            width: fit-content;
+        }
+
+        .logout-btn {
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .logout-btn:hover { background: #ff5252; }
+
         .container {
-            max-width: 1200px;
-            margin: 0 auto;
             background: white;
             padding: 40px;
             border-radius: 10px;
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
         }
 
-        h1 {
-            color: #333;
-            margin-bottom: 20px;
-        }
+        h1 { color: #333; margin-bottom: 20px; }
 
         .back-btn {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -45,9 +79,7 @@
             margin-bottom: 20px;
         }
 
-        .back-btn:hover {
-            opacity: 0.9;
-        }
+        .back-btn:hover { opacity: 0.9; }
 
         .create-form {
             margin-bottom: 28px;
@@ -57,11 +89,7 @@
             background: #fafafa;
         }
 
-        .create-form h2 {
-            color: #333;
-            font-size: 20px;
-            margin-bottom: 16px;
-        }
+        .create-form h2 { color: #333; font-size: 20px; margin-bottom: 16px; }
 
         .form-row {
             display: grid;
@@ -94,27 +122,30 @@
             font-weight: 600;
         }
 
-        .submit-btn:hover {
-            opacity: 0.95;
-        }
+        .submit-btn:hover { opacity: 0.95; }
     </style>
 </head>
 <body>
-    <div class="container">
-        <a href="${pageContext.request.contextPath}/admin/home" class="back-btn">← Voltar</a>
+    <div class="page-container">
+        <%@ include file="/WEB-INF/jsp/admin/fragments/adminHeader.jspf" %>
 
-        <form class="create-form" method="POST" action="${pageContext.request.contextPath}/admin/moradores">
-            <h2>Novo Morador</h2>
-            <div class="form-row">
-                <input type="text" name="name" placeholder="Nome completo" required>
-                <input type="text" name="login" placeholder="Login" required>
-                <input type="password" name="password" placeholder="Senha" required>
-            </div>
-            <button type="submit" class="submit-btn">Cadastrar morador</button>
-        </form>
+        <div class="container">
+            <a href="${pageContext.request.contextPath}/admin/home" class="back-btn">&larr; Voltar</a>
 
-        <h1>Gerenciar Moradores</h1>
-        <!-- Conteúdo será adicionado aqui -->
+            <form class="create-form" method="POST" action="${pageContext.request.contextPath}/admin/moradores">
+                <h2>Novo Morador</h2>
+                <div class="form-row">
+                    <input type="text" name="name" placeholder="Nome completo" required>
+                    <input type="text" name="login" placeholder="Login" required>
+                    <input type="password" name="password" placeholder="Senha" required>
+                </div>
+                <button type="submit" class="submit-btn">Cadastrar morador</button>
+            </form>
+
+            <h1>Gerenciar Moradores</h1>
+            <!-- Conteudo sera adicionado aqui -->
+        </div>
     </div>
 </body>
+
 </html>

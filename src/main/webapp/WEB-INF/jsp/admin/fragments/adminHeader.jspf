@@ -1,0 +1,10 @@
+<div class="header">
+    <div class="user-info">
+        <h2>${user.name}</h2>
+        <p><strong>Login:</strong> ${user.login}</p>
+        <span class="role">${user.role}</span>
+    </div>
+    <form method="POST" action="${pageContext.request.contextPath}/auth/logout" style="display: inline;">
+        <button type="submit" class="logout-btn">Sair</button>
+    </form>
+</div>
