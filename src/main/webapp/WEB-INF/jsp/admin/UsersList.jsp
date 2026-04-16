@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -123,6 +124,54 @@
         }
 
         .submit-btn:hover { opacity: 0.95; }
+
+        .users-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 24px;
+        }
+
+        .users-table thead {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .users-table th {
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .users-table tbody tr {
+            border-bottom: 1px solid #e9e9e9;
+            transition: background-color 0.2s;
+        }
+
+        .users-table tbody tr:hover {
+            background-color: #f5f5f5;
+        }
+
+        .users-table td {
+            padding: 12px;
+            color: #333;
+        }
+
+        .users-table .role-badge {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .empty-message {
+            text-align: center;
+            color: #999;
+            padding: 30px;
+            font-style: italic;
+        }
     </style>
 </head>
 <body>
@@ -143,7 +192,37 @@
             </form>
 
             <h1>Gerenciar Moradores</h1>
-            <!-- Conteudo sera adicionado aqui -->
+
+            <c:choose>
+                <c:when test="${empty userList}">
+                    <div class="empty-message">Nenhum morador cadastrado no sistema.</div>
+                </c:when>
+                <c:otherwise>
+                    <table class="users-table">
+                        <thead>
+                            <tr>
+                                <th>Nome</th>
+                                <th>Login</th>
+                                <th>Role</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <c:forEach var="user" items="${userList}">
+                                <tr>
+                                    <td>${user.name}</td>
+                                    <td>${user.login}</td>
+                                    <td><span class="role-badge">${user.role}</span></td>
+                                    <td>
+                                        <a href="#" style="color: #667eea; text-decoration: none; margin-right: 10px;">Editar</a>
+                                        <a href="#" style="color: #ff6b6b; text-decoration: none;">Deletar</a>
+                                    </td>
+                                </tr>
+                            </c:forEach>
+                        </tbody>
+                    </table>
+                </c:otherwise>
+            </c:choose>
         </div>
     </div>
 </body>

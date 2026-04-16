@@ -33,7 +33,7 @@ public class UserService implements UserDetailsService {
     }
 
     public List<UserEntity> getAllUsers() {
-        return userRepository.findAll();
+        return userRepository.findAllWithRoleUser();
     }
 
     // UPDATE

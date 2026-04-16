@@ -1,6 +1,7 @@
 package com.dunnas.ChamadoServicoCondominio.Infra.Controllers;
 
 import com.dunnas.ChamadoServicoCondominio.Application.UseCases.CreateUserUseCase;
+import com.dunnas.ChamadoServicoCondominio.Application.UseCases.ListAllUsersUseCase;
 import com.dunnas.ChamadoServicoCondominio.Domain.Core.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -16,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class AdminController {
     @Autowired
     private CreateUserUseCase createUseruseCase;
+    @Autowired
+    private ListAllUsersUseCase listAllUsersUseCase;
 
     private void addLoggedUserToModel(Model model) {
         UserEntity user = (UserEntity) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -31,6 +34,7 @@ public class AdminController {
     @GetMapping("/moradores")
     public String usersList(Model model) {
         addLoggedUserToModel(model);
+        model.addAttribute("userList", listAllUsersUseCase.execute());
         return "admin/UsersList";
     }
 
@@ -55,6 +59,6 @@ public class AdminController {
     @GetMapping("/administradores")
     public String listAdmins(Model model) {
         addLoggedUserToModel(model);
-        return "admin/ListAdmins";
+        return "admin/AdminsList";
     }
 }
