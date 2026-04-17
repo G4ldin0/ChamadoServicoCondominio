@@ -32,6 +32,13 @@ public class AdminController {
     @Autowired
     private DeleteAdminUseCase deleteAdminUseCase;
 
+    @Autowired
+    private CreateBlockUseCase createBlockUseCase;
+    @Autowired
+    private DeleteBlockUseCase deleteBlockUseCase;
+    @Autowired
+    private ListAllBlocks listAllBlocks;
+
 
     private void addLoggedUserToModel(Model model) {
         UserEntity user = (UserEntity) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -127,6 +134,35 @@ public class AdminController {
     @GetMapping("/blocos")
     public String listBlocks(Model model) {
         addLoggedUserToModel(model);
-        return "admin/ListBlocks";
+         model.addAttribute("blockList", listAllBlocks.execute());
+        return "admin/BlocksList";
+    }
+
+    @PostMapping("/blocos")
+    public String createBlock(@RequestParam String name, @RequestParam int floorQuant, @RequestParam int unitPerFloor) {
+        try {
+            createBlockUseCase.execute(name, floorQuant, unitPerFloor);
+            return "redirect:/admin/blocos";
+        } catch (RuntimeException e) {
+            // Log the error message
+            System.err.println("Error creating block: " + e.getMessage());
+            // Optionally, you can add an error message to the model to display in the UI
+            // model.addAttribute("errorMessage", "Error creating block: " + e.getMessage());
+            return "redirect:/admin/blocos";
+        }
+    }
+
+    @PostMapping("/blocos/apagar/{id}")
+    public String deleteBlock(@PathVariable String id) {
+        try{
+            deleteBlockUseCase.execute(id);
+            return "redirect:/admin/blocos";
+        } catch (RuntimeException e) {
+            // Log the error message
+            System.err.println("Error deleting block: " + e.getMessage());
+            // Optionally, you can add an error message to the model to display in the UI
+            // model.addAttribute("errorMessage", "Error deleting block: " + e.getMessage());
+            return "redirect:/admin/blocos";
+        }
     }
 }
